@@ -1,0 +1,13 @@
+name = "BitTwiddle"
+uuid = "a87527db-bdee-4643-9683-53ef9d88ec03"
+authors = ["Jan Weidner"]
+version = "0.1.0"
+
+[compat]
+julia = "1.3"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
