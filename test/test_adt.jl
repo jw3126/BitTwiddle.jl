@@ -10,8 +10,16 @@ plan = ADTPlan(:MaybeInt, [
         ConstructorPlan(:Nil, Tuple{}),
         ])
 
-ex = emit(plan)
-eval(ex)
+println(@macroexpand @adt MaybeInt begin
+    Just(::Int)
+    Nil()
+end)
+
+@adt MaybeInt begin
+    Just(::Int)
+    Nil()
+end
+
 
 one = @inferred Just(1)
 two = @inferred Just(2)
@@ -31,5 +39,10 @@ out = @inferred destructure(Just, one)
 @test_throws ArgumentError destructure(Nil, one)
 @test_throws ArgumentError destructure(Just, nil)
 
+@test occursin("Just", sprint(show, one))
+@test occursin("Nil", sprint(show, nil))
+for o in [nil, one, two]
+    @test eval(parse(sprint(show, o))) === o
+end
 
 end#module
